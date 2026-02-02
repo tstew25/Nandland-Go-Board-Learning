@@ -1,0 +1,11 @@
+# LED pins
+set_io	o_LED[0]		56
+set_io	o_LED[1]		57
+set_io	o_LED[2]		59
+set_io	o_LED[3]		60
+
+# Push button switches
+set_io	i_Switch[0]		53
+set_io	i_Switch[1]		51
+set_io	i_Switch[2]		54
+set_io	i_Switch[3]		52
