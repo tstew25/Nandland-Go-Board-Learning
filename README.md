@@ -18,7 +18,7 @@ I will be installing Windows 10 with the Pro license as I will be RDP-ing to thi
 ### Installing Virtualbox
 I will assume you have Ubuntu 24.04 already installed and will start at the installation of Virtualbox. Luckily this is pretty straightforward - just follow the instructions provided here: https://www.virtualbox.org/wiki/Linux_Downloads.
 
-Specifically, you will want to follow the steps listed under 'Debian-based Linux Distributions'. As I am using Ubuntu 24.04, replace '<mydist>' with 'noble' (excluding the quotation marks). The commands should look like such as of the time of writing this page:
+Specifically, you will want to follow the steps listed under 'Debian-based Linux Distributions'. As I am using Ubuntu 24.04, replace '\<mydist\>' with 'noble' (excluding the quotation marks). The commands should look like such as of the time of writing this page:
 
 ```
 deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] https://download.virtualbox.org/virtualbox/debian noble contrib
@@ -80,8 +80,8 @@ Plug the Go Board into the Ubuntu host machine and open the Windows 10 VM settin
 Once this is done, Windows should be able to see the device but APIO won't be able to just yet since we need to install the drivers for it during APIO installation.
 
 ### Installing APIO
-APIO GitHub: https://github.com/FPGAwars/apio
-APIO Docs: https://fpgawars.github.io/apio/docs/
+- APIO GitHub: https://github.com/FPGAwars/apio
+- APIO Docs: https://fpgawars.github.io/apio/docs/
 
 Installing APIO is fairly straight-forward again; I used the pip install method after installing the latest version of Python found here: https://www.python.org/downloads/
 
