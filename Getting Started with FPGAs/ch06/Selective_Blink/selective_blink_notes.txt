@@ -1,0 +1,61 @@
+// selective blink
+1. blink led at 2Hz
+
+- clock is 25MHz, clock cycle 40ns (1000 / 25 = 40)
+- 2Hz = 500ms -> 500,000,000ns / 40ns = 12,500,000 clock cycles
+- 12,500,000 = 24 bits
+
+LIMIT=12500000
+
+==============================
+2. use LFSR as counter
+input clk						// clock
+reg limit = clog2(LIMIT) - 1 	// save upper bit limit
+reg lfsr[limit:0] --> 23:0		// create lfsr
+wire xnor						// create xnor for lfsr
+reg done						// create reg for storing lfsr reset state					
+wire enable						// create enable that will go to DFF
+
+- posedge clk
+	- lfsr <= {lfsr[limit - 1:0], xnor}			// shift to next iteration
+		- if lfsr = 0							// if lfsr reset
+			- done <= 1							// set done bit
+		- else
+			- done <= 0							// flip done bit
+
+- assign xnor = lfsr[num] ^~ lfsr[num]			// xnor the lfsr based on lfsr polynomial
+- assign enable = done							// send pulse to enable
+
+==============================
+3. use flip flop to send toggle signal
+
+input clk						// clock
+input enable					// enable bit received from lfsr
+output q						// output of dff
+
+wire d							// input for dff
+assign d = ~q					// invert output, send to input
+
+- posedge clk
+	- if enable					// check if enable is set
+		- q <= d				// send inverted input
+
+==============================
+4. demux
+
+i_1		|	i_2		|	o_LED_*
+0			0			1
+1			0			2
+0			1			3
+1			1			4
+
+input q								// output from dff
+input i_1, i_2						// switch inputs
+
+output l_0, l_1, l_2, l_3			// led outputs
+
+
+assign l_0 = not i_1	& not i_2 	? q : 0 // trigger led 0 - 3 accordingly
+assign l_1 = i_1 		& not i_2 	? q : 0
+assign l_2 = not i_1 	& i_2 		? q : 0
+assign l_3 = i_1 		& i_2 		? q : 0
