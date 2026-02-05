@@ -1,0 +1,56 @@
+// Notes:
+I didn't realize that there was another part to this challenge and
+was scrolling through to see what was next and stumbled upon the block
+diagram and code for this version of the counter so I can't say the
+design and code were all original based on just the requirements given.
+
+That said, I simply referenced the block diagram when writing the below
+notes and code for this version of the project. It was of course much
+simpler than the LFSR version and was more along the lines of what I 
+had initially started to flesh out for the LFSR code.
+
+To make up for the fact I kinda cheated, I decided to try writing a 
+testbench for this from scratch, just referencing prior testbenches
+(mainly the Debounce Filter one). Everything worked with that just
+fine. The only thing I want to learn / solve is the value of the LEDs
+is reported as X in GTKWave; due to my ignorance of this I am unsure
+if this is an error in the testbench or code or if it is an error at all.
+
+==============================
+// selective blink
+1. blink led at 2Hz
+
+- clock is 25MHz, clock cycle 40ns (1000 / 25 = 40)
+- 2Hz = 500ms -> 500,000,000ns / 40ns = 12,500,000 clock cycles
+- 12,500,000 = 24 bits
+
+LIMIT=12500000
+
+==============================
+2. implement counter
+- input en
+- input clk
+- output toggle
+
+- reg [23:0] counter // 24 bit counter
+
+- posedge clk
+	- if enable
+		- if counter == limit
+			- inv toggle
+			- reset counter
+		- else
+			- inc counter
+	- else
+		- toggle = 0
+		
+==============================
+3. implement dmux
+- input toggle
+- input sw_1, sw_2
+- output led_1, 2, 3, 4
+
+led_1 = toggle when not sw_1, not sw_2
+led_2 = toggle when sw_1, not sw_2
+led_3 = toggle when not sw_1, sw_2
+led_4 = toggle when sw_1, sw_2

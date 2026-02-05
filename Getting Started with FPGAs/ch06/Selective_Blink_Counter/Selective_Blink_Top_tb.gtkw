@@ -1,0 +1,26 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Wed Feb 04 23:59:24 2026
+[*]
+[dumpfile] "C:\Users\tyler\Documents\github\Nandland-Go-Board-Learning\Getting Started with FPGAs\ch06\Selective_Blink_Counter\_build\default\Selective_Blink_Top_tb.vcd"
+[dumpfile_mtime] "Wed Feb 04 23:58:45 2026"
+[dumpfile_size] 42916
+[savefile] "C:\Users\tyler\Documents\github\Nandland-Go-Board-Learning\Getting Started with FPGAs\ch06\Selective_Blink_Counter\Selective_Blink_Top_tb.gtkw"
+[timestart] 21
+[size] 2560 1353
+[pos] -272 -269
+*-3.940631 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 246
+[signals_width] 199
+[sst_expanded] 1
+[sst_vpaned_height] 421
+@28
+Selective_Blink_Top_tb.r_Clk
+Selective_Blink_Top_tb.r_Switch_1
+Selective_Blink_Top_tb.r_Switch_2
+Selective_Blink_Top_tb.w_LED_1
+Selective_Blink_Top_tb.w_LED_2
+Selective_Blink_Top_tb.w_LED_3
+Selective_Blink_Top_tb.w_LED_4
+[pattern_trace] 1
+[pattern_trace] 0

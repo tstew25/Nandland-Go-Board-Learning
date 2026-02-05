@@ -1,0 +1,86 @@
+// Notes:
+Below are the notes that I took when writing this project. I tried to do as much of it
+as possible without looking at the code examples in the book. I managed to get a decent
+way through it before running into a road block with how to design it. I initially was 
+trying to put the Demux before the LFSR and have the LED send it's output to the LFSR
+to begin the counter. I couldn't think of a decent solution so I checked the block
+diagram provided in the book. At this point I didn't need to look back at the book
+for more information and the thoughts below + code was written from there.
+
+// Takeaways:
+Looking up the polynomials to use for various length registers didn't seem to work?
+For a 24-bit register it suggested that I use:
+	reg[23] ^~ reg[22] ^~ reg[21] ^~ reg[17]
+	
+This resulted in the LED blinking much faster than the desired 2Hz / 500ms. I lowered
+it to the polynomial used for a 23 bit register:
+	reg[23] ^~ reg[18]
+and that appeared to be correct (as far as my eyes could tell).
+
+Moving forward I would like to understand more about the polynomials, how those are 
+determined, etc. This would likely help figure out this issue. As Russell has in his
+GitHub, I could do more to add cases for all length registers and not just hard-code
+it to use that polynomial. 
+
+==============================
+// selective blink
+1. blink led at 2Hz
+
+- clock is 25MHz, clock cycle 40ns (1000 / 25 = 40)
+- 2Hz = 500ms -> 500,000,000ns / 40ns = 12,500,000 clock cycles
+- 12,500,000 = 24 bits
+
+LIMIT=12500000
+
+==============================
+2. use LFSR as counter
+input clk						// clock
+reg limit = clog2(LIMIT) - 1 	// save upper bit limit
+reg lfsr[limit:0] --> 23:0		// create lfsr
+wire xnor						// create xnor for lfsr
+reg done						// create reg for storing lfsr reset state					
+wire enable						// create enable that will go to DFF
+
+- posedge clk
+	- lfsr <= {lfsr[limit - 1:0], xnor}			// shift to next iteration
+		- if lfsr = 0							// if lfsr reset
+			- done <= 1							// set done bit
+		- else
+			- done <= 0							// flip done bit
+
+- assign xnor = lfsr[num] ^~ lfsr[num]			// xnor the lfsr based on lfsr polynomial
+- assign enable = done							// send pulse to enable
+
+==============================
+3. use flip flop to send toggle signal
+
+input clk						// clock
+input enable					// enable bit received from lfsr
+output q						// output of dff
+
+wire d							// input for dff
+assign d = ~q					// invert output, send to input
+
+- posedge clk
+	- if enable					// check if enable is set
+		- q <= d				// send inverted input
+
+==============================
+4. demux
+
+i_1		|	i_2		|	o_LED_*
+0			0			1
+1			0			2
+0			1			3
+1			1			4
+
+input q								// output from dff
+input i_1, i_2						// switch inputs
+
+output l_0, l_1, l_2, l_3			// led outputs
+
+
+assign l_0 = not i_1	& not i_2 	? q : 0 // trigger led 0 - 3 accordingly
+assign l_1 = i_1 		& not i_2 	? q : 0
+assign l_2 = not i_1 	& i_2 		? q : 0
+assign l_3 = i_1 		& i_2 		? q : 0
