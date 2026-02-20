@@ -1,0 +1,12 @@
+# Input
+set_io			i_Btn[0]		51
+set_io			i_Btn[1]		52
+set_io			i_Btn[2]		53
+set_io			i_Btn[3]		54
+set_io			i_Clk			15
+
+# Output
+set_io			o_LED[0]		56
+set_io			o_LED[1]		57
+set_io			o_LED[2]		59
+set_io			o_LED[3]		60	

@@ -1,0 +1,17 @@
+Notes:
+Goal will be to eventually implement each of the light patterns below
+based on the button pressed.
+
+
+==============================
+Light patterns:
+- button 1: leds flash across left to right
+- button 2: leds flash across right to left
+- button 3: leds flash on/off with led 1 + 3 then 2 + 4
+- button 4: leds light up and stay on then turn off, left to right
+
+Other reqs:
+- each led lights up for 0.5 seconds at a time
+- for button 4, it will be 0.5 seconds between when the next led lights up
+- implement debounce
+- implement testbench for simulation
