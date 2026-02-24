@@ -1,9 +1,10 @@
 # Input
-set_io			i_Btn[0]		51
-set_io			i_Btn[1]		52
-set_io			i_Btn[2]		53
-set_io			i_Btn[3]		54
 set_io			i_Clk			15
+
+set_io			i_Btn_1			51
+set_io			i_Btn_2			52
+set_io			i_Btn_3			53
+set_io			i_Btn_4			54
 
 # Output
 set_io			o_LED[0]		56

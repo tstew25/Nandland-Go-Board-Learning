@@ -6,12 +6,22 @@ based on the button pressed.
 ==============================
 Light patterns:
 - button 1: leds flash across left to right
+	- completed: left_to_right.v
 - button 2: leds flash across right to left
+	- completed: right_to_left.v
 - button 3: leds flash on/off with led 1 + 3 then 2 + 4
+	- completed: alt_lights.v
 - button 4: leds light up and stay on then turn off, left to right
+	- completed: trailing_lights.v
 
 Other reqs:
 - each led lights up for 0.5 seconds at a time
-- for button 4, it will be 0.5 seconds between when the next led lights up
+- for button 4, it will be 1 second between when the next led lights up
 - implement debounce
 - implement testbench for simulation
+
+==============================
+Ideas:
+- use one module for the clock counter and led selector
+	- use output from that module to feed input of pattern modules
+- create module to determine which module should be enabled
