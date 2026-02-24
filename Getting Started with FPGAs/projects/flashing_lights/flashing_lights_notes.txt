@@ -1,6 +1,51 @@
 Notes:
-Goal will be to eventually implement each of the light patterns below
-based on the button pressed.
+The goal of this project was to create different patterns that the
+LEDs would light up in based on what button was pressed. This wasn't
+part of the Nandland book (as of Chapter 6, at least), it was just an 
+idea I came up with on my own. 
+
+As I'm learning a new language or topic, it's easy to simply follow along
+the book or tutorials for making projects, but it's also good to try to create
+your own and see it through. This was fairly straight forward, luckily, though
+pattern 4 was definitely the hardest. Luckily all of the chapters of the book
+thus far helped a lot, especially the Common FPGA Modules section. Referring back
+to notes from that and previous chapters, along with the help of Google, reading
+documentation, and AI here and there when I couldn't find an answer elsewise, I was 
+able to figure out a working solution (which probably isn't the best, but that's the 
+point of learning). 
+
+In the end, once I remembered the pattern of an LFSR was exactly what I needed
+for pattern 4, it then became an issue of figuring out how to get it to reverse
+the LEDs once it got to a certain point. I tried many variations of this before
+realizing I could simply check the MSB. This honestly happened because I was
+trying to write a simulator for it since I couldn't get it to work and wasnted to
+see where it was going wrong. Eventually I got a testbench of it working and 
+saw that various hex numbers were being lit up in the sim (based on what bits
+were being enabled at that clock cycle). That's when I just wrote out the 
+bit patterns and the hex numbers I should expect to see for the pattern I wanted
+and noticed that the MSB would be a good way to check when the pattern needed
+to switch.
+
+The next challenge was figuring out a good way to pick which module would 
+be used based on the button input. I had written led_toggle.v to somewhat
+simulate this by just having it light up an LED and remain lit until a new
+button was pressed. Initially I tried to tie functionality like this into
+an Enable bit that would be fed to the modules based on the button pressed.
+After receiving warnings from Verilator that o_LED was being "multidriven"
+and doing some light googling to determine what that meant, I stumbled across
+a Reddit post with a similar question, to which someone mentioned that you
+don't really need to control the input, just the output, since all modules
+will still run across all clock cycles. 
+
+So at this point I was basically using a demux to enable the modules and then
+a mux to take the different outputs and send it to one output based on the 
+button. But then after reading that comment, I tried removing the Enable bit
+and just using a mux to send the wanted output to the LEDs and it worked all
+while being simpler overall.
+
+Still to do: there's probably still better ways to implement some of this, but
+I'll learn as I keep going. I also still want to write a testbench for the 
+project as a whole, but again, I'll do that when I get to it.
 
 
 ==============================
@@ -15,13 +60,5 @@ Light patterns:
 	- completed: trailing_lights.v
 
 Other reqs:
-- each led lights up for 0.5 seconds at a time
-- for button 4, it will be 1 second between when the next led lights up
-- implement debounce
+- each led lights up for 1 second at a time
 - implement testbench for simulation
-
-==============================
-Ideas:
-- use one module for the clock counter and led selector
-	- use output from that module to feed input of pattern modules
-- create module to determine which module should be enabled
