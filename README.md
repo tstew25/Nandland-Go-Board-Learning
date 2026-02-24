@@ -13,7 +13,7 @@ For this, I will be using the following software:
 ### Windows 10 ISO
 You can still download the ISO from Microsoft at this link: https://www.microsoft.com/en-us/software-download/windows10ISO
 
-I will be installing Windows 10 with the Pro license as I will be RDP-ing to this VM from my primary workstation computer. If you do not have a Pro license, you can still the Home edition and everything will work the same but you will just not be able to RDP into the VM.
+I will be installing Windows 10 with the Pro license as I will be RDP-ing to this VM from my primary workstation computer. If you do not have a Pro license, you can still use the Home edition and everything will work the same but you will just not be able to RDP into the VM.
 
 ### Installing Virtualbox
 I will assume you have Ubuntu 24.04 already installed and will start at the installation of Virtualbox. Luckily this is pretty straightforward - just follow the instructions provided here: https://www.virtualbox.org/wiki/Linux_Downloads.
